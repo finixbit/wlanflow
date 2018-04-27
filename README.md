@@ -58,7 +58,7 @@ Options:
  -d, --debug                      Specify debugging (optional)
 ```
 
-# Exported Data Sample
+# Exported Data 
 ```
 {
   "antenna": 1, 
