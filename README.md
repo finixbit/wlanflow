@@ -7,15 +7,18 @@ Data is exported using zeromq pubsub to be consumed by applications that want
 to work with this data.
 
 # Required libraries
-libtins (https://github.com/name/libtins)
+libtins (https://github.com/name/libtins),
 libpcap-dev
 
 # Installation
 
 ## Install Libpcap-dev 
+```
 $ sudo apt-get install libcapstone-dev
+```
 
 ## Install Libtins
+```
 $ git clone https://github.com/libtins/libtins.git
 $ cd libtins
 $ mkdir build && cd build
@@ -26,16 +29,22 @@ $ sudo make install
 $ git clone https://github.com/finixbit/finix.git
 $ cd finix
 $ make
+```
 
 # Usage (Requires Root)
 
 ## Enable monitor mode for wireless interface 
+```
 $ sudo ./bin/airmon-ng start wlan0
+```
 
 ## run finix using created monitor mode interface
+```
 $ sudo ./bin/finix --interface=wlan0mon --debug
+```
 
 # Help
+```
 Usage: ./bin/finix [-h|--help] -i|--interface value [-n|--name value] [-f|--pcap-filter value] [-z|--zmq-conn value] [-d|--debug] 
 Options:
  -h, --help                       print this help
@@ -44,8 +53,10 @@ Options:
  -f, --pcap-filter value          Specify pcap wlan filter (optional [default=wlan])
  -z, --zmq-conn value             Specify zeromq connection (optional [default=tcp://*:70000])
  -d, --debug                      Specify debugging (optional)
+```
 
 # Exported Data Sample
+```
 {
   "antenna": 1, 
   "dbm_signal": -73, 
@@ -73,5 +84,6 @@ Options:
   "src_address": "ff:ff:ff:ff:ff:ff", 
   "timestamp": "1524842876"
 }
+```
 
 # TODO
