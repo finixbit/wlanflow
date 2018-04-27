@@ -7,7 +7,7 @@ Data is exported using zeromq pubsub to be consumed by applications that want
 to work with this data.
 
 # Required libraries
-libtins (https://github.com/name/libtins),
+libtins,
 libpcap-dev
 
 # Installation
@@ -19,13 +19,15 @@ $ sudo apt-get install libcapstone-dev
 
 ## Install Libtins
 ```
-$ git clone https://github.com/libtins/libtins.git
+$ git clone https://github.com/mfontanini/libtins.git
 $ cd libtins
 $ mkdir build && cd build
 $ cmake ../
 $ make 
 $ sudo make install
 
+## Install Finix
+```
 $ git clone https://github.com/finixbit/finix.git
 $ cd finix
 $ make
@@ -87,3 +89,4 @@ Options:
 ```
 
 # TODO
+1. Export data using zeromq pubsub
