@@ -18,8 +18,6 @@ bool FinixCapture::process_packets(const PDU& pdu) {
     if (invalid_wlan_packet(pdu))
         return true;
 
-    printf("pkt\n");
-
     FinixFormat pkt;
     pkt.set_timestamp(get_current_timestamp());
 
