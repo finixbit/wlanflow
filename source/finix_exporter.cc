@@ -2,7 +2,7 @@
 using namespace finix;
 
 
-FinixExporter::FinixExporter(std::string zmq_conn_string, bool debug) {
+void FinixExporter::init(std::string zmq_conn_string, bool debug) {
 
 }
 

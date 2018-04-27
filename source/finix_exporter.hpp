@@ -6,8 +6,8 @@
 namespace finix {
 class FinixExporter {
     public:
-        FinixExporter (std::string zmq_conn_string, bool debug);
-        bool export_capture(std::string capture_data);
+        static void init(std::string zmq_conn_string, bool debug);
+        static bool export_capture(std::string capture_data);
 
     private:
         bool m_connection = false;

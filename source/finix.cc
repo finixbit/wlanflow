@@ -9,10 +9,10 @@ using namespace finix;
 int main(int argc, char* argv[])
 {
     StringOption interfaceOpt('i' ,"interface"   ,true  ,"Specify Interface");
-    StringOption      nameOpt('n' ,"name"        ,false ,"Specify export name (optional)");
-    StringOption    filterOpt('f' ,"pcap-filter" ,false ,"Specify pcap wlan filter (optional)");
-    StringOption   zmqConnOpt('z' ,"zmq-conn"    ,false ,"Specify zeromq connection string (optional)");
-    StringOption     debugOpt('n' ,"debug"       ,false ,"Specify debugging (optional)");
+    StringOption      nameOpt('n' ,"name"        ,false ,"Specify export name (optional [default='default'])");
+    StringOption    filterOpt('f' ,"pcap-filter" ,false ,"Specify pcap wlan filter (optional [default='wlan'])");
+    StringOption   zmqConnOpt('z' ,"zmq-conn"    ,false ,"Specify zeromq connection (optional [default='tcp://*:70000'])");
+    BoolOption       debugOpt('d' ,"debug"       ,false ,"Specify debugging (optional)");
 
     Parser parser;
     parser.addOption(interfaceOpt);

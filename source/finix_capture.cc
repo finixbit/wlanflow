@@ -7,11 +7,6 @@ using namespace Tins;
 using namespace finix;
 
 
-
-bool FinixCapture::compute_packets(const PDU& pdu) {
-    return true;
-}
-
 void FinixCapture::run() {
     Sniffer sniffer(m_finix_config.get_interface(), Sniffer::PROMISC);
     sniffer.set_filter(m_finix_config.get_pcap_filter());
@@ -22,6 +17,8 @@ bool FinixCapture::process_packets(const PDU& pdu) {
     //  check if packet is not wlan exit
     if (invalid_wlan_packet(pdu))
         return true;
+
+    printf("pkt\n");
 
     FinixFormat pkt;
     pkt.set_timestamp(get_current_timestamp());
@@ -41,14 +38,14 @@ bool FinixCapture::process_packets(const PDU& pdu) {
 
     // get signals
     pkt.set_dbm_signal(get_dbm_signal(pdu));
-    pkt.set_signal_quality(get_signal_quality(pdu));
     pkt.set_dbm_antenna(get_antenna(pdu));
-    pkt.set_db_signal(get_db_signal(pdu));
-    pkt.set_dbm_noise(get_dbm_noise(pdu));
+    // pkt.set_signal_quality(get_signal_quality(pdu));
+    // pkt.set_db_signal(get_db_signal(pdu));
+    // pkt.set_dbm_noise(get_dbm_noise(pdu));
 
     // export data
     auto data = pkt.serialize_to_json_string();
-    auto response = export_capture(data);
+    auto response = FinixExporter::export_capture(data);
     
     if(response)
         printf("%s\n", data.c_str());
@@ -138,12 +135,12 @@ std::string FinixCapture::get_dst_addr(std::string frame_type, const PDU& pdu) {
     dst_addr = data.addr1().to_string();
   }
 
-  if(frame_type == std::string(MGMT_FRAME)) {
+  if(frame_type == std::string(CTRL_FRAME)) {
     const Dot11Control &data = pdu.rfind_pdu<Dot11Control>();
     dst_addr = data.addr1().to_string();
   }
 
-  if(frame_type == std::string(MGMT_FRAME)) {
+  if(frame_type == std::string(DATA_FRAME)) {
     const Dot11Data &data = pdu.rfind_pdu<Dot11Data>();
     dst_addr = data.dst_addr().to_string();
   }
@@ -151,61 +148,66 @@ std::string FinixCapture::get_dst_addr(std::string frame_type, const PDU& pdu) {
 }
 
 int32_t FinixCapture::get_dbm_signal(const PDU& pdu) {
-    int32_t dbm_signal; 
+    int32_t dbm_signal = 0; 
   
     try {
         const RadioTap &radio_tap = pdu.rfind_pdu<RadioTap>();
         dbm_signal = (int32_t)radio_tap.dbm_signal();
     }
     catch(...) { 
+        printf("error @ get_dbm_signal\n");
     }
     return dbm_signal;
 }
 
 int32_t FinixCapture::get_signal_quality(const PDU& pdu) {
-    int32_t signal_quality; 
+    int32_t signal_quality = 0; 
   
     try {
         const RadioTap &radio_tap = pdu.rfind_pdu<RadioTap>();
         signal_quality = (int32_t)radio_tap.signal_quality();
     }
     catch(...) { 
+        printf("error @ get_signal_quality\n");
     }
     return signal_quality;
 }
 
 int32_t FinixCapture::get_antenna(const PDU& pdu) {
-    int32_t antenna; 
+    int32_t antenna = 0; 
   
     try {
         const RadioTap &radio_tap = pdu.rfind_pdu<RadioTap>();
         antenna = (int32_t)radio_tap.antenna();
     }
     catch(...) { 
+        printf("error @ get_antenna\n");
     }
     return antenna;
 }
 
 int32_t FinixCapture::get_db_signal(const PDU& pdu) {
-    int32_t db_signal; 
+    int32_t db_signal = 0; 
   
     try {
         const RadioTap &radio_tap = pdu.rfind_pdu<RadioTap>();
         db_signal = (int32_t)radio_tap.db_signal();
     }
     catch(...) { 
+        printf("error @ get_db_signal\n");
     }
     return db_signal;
 }
 
 int32_t FinixCapture::get_dbm_noise(const PDU& pdu) {
-    int32_t dbm_noise; 
+    int32_t dbm_noise = 0; 
   
     try {
         const RadioTap &radio_tap = pdu.rfind_pdu<RadioTap>();
         dbm_noise = (int32_t)radio_tap.dbm_noise();
     }
     catch(...) { 
+        printf("error @ get_dbm_noise\n");
     }
     return dbm_noise;
 }

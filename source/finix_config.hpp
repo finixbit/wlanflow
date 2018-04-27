@@ -23,7 +23,7 @@ class FinixConfig  {
         std::string m_interface;
         bool m_debug = false;
         std::string m_name  = "default";
-        std::string m_zmq_conn_string = "tcp://*:5559";
+        std::string m_zmq_conn_string = "tcp://*:70000";
         std::string m_pcap_filter = "wlan";
 
         std::string m_langtype;

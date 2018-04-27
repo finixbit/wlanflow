@@ -50,12 +50,12 @@ std::string FinixFormat::serialize_to_json_string() {
       { "frame_type", m_frame_type },
       { "frame_subtype", m_frame_subtype },
       { "src_address", m_src_address },
-      { "dst_address", m_dbm_signal },
-      { "signal_quality", m_signal_quality },
+      { "dst_address", m_dst_address },
+      { "dbm_signal", m_dbm_signal },
       { "antenna", m_antenna },
-      { "db_signal", m_db_signal },
-      { "dbm_noise", m_dbm_noise },
-      { "created_on", 0 } 
+      // { "signal_quality", m_signal_quality },
+      // { "db_signal", m_db_signal },
+      // { "dbm_noise", m_dbm_noise },
     };
     return event.dump();
 };

@@ -3,7 +3,7 @@ all: json finix_format finix_exporter finix_capture finix_config finix
 
 finix: source/finix.cc 
 	g++ -o bin/finix source/finix.cc finix_config.o finix_exporter.o finix_format.o \
-	    finix_capture.o json11.o -O3 -std=gnu++11 
+	    finix_capture.o json11.o -O3 -std=gnu++11 -lpthread -lzmq -ltins
 
 finix_config: source/finix_config.cc 
 	g++ -o finix_config.o -c source/finix_config.cc -std=gnu++11 
