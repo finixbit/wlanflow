@@ -41,7 +41,7 @@ $ make
 $ sudo ./bin/airmon-ng start wlan0
 ```
 
-## run finix using created monitor mode interface
+## Run finix using created monitor mode interface
 ```
 $ sudo ./bin/finix --interface=wlan0mon --debug
 ```
