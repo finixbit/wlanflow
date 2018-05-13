@@ -46,7 +46,7 @@ $ sudo ./bin/airmon-ng start wlan0
 $ sudo ./bin/finix --interface=wlan0mon --debug
 ```
 
-# Help
+## Help
 ```
 Usage: ./bin/finix [-h|--help] -i|--interface value [-n|--name value] [-f|--pcap-filter value] [-z|--zmq-conn value] [-d|--debug] 
 Options:
