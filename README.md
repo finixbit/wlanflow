@@ -38,12 +38,14 @@ $ make
 
 ## Enable monitor mode for wireless interface 
 ```
-$ sudo ./bin/airmon-ng start wlan0
+$ sudo ifconfig wlan0 down
+$ sudo iwconfig wlan0 mode monitor
+$ sudo ifconfig wlan0 up
 ```
 
 ## Run finix using created monitor mode interface
 ```
-$ sudo ./bin/finix --interface=wlan0mon --debug
+$ sudo ./bin/finix --interface=wlan0 --debug
 ```
 
 ## Help
