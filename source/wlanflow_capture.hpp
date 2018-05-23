@@ -1,19 +1,19 @@
-#ifndef _H_FINIX_CAPTURE_
-#define _H_FINIX_CAPTURE_
+#ifndef _H_WLANFLOW_CAPTURE_
+#define _H_WLANFLOW_CAPTURE_
 
 #include <tins/tins.h>
-#include "finix_config.hpp"
-#include "finix_format.hpp"
-#include "finix_exporter.hpp"
+#include "wlanflow_config.hpp"
+#include "wlanflow_format.hpp"
+#include "wlanflow_exporter.hpp"
 using namespace Tins;
 
 
-namespace finix {
-class FinixCapture {
+namespace wlanflow {
+class WlanflowCapture {
     public:
-        FinixCapture (FinixConfig &finix_config):  m_finix_config(finix_config) {
-            FinixExporter::init(
-                finix_config.get_zmq_conn_string(), finix_config.get_debug());
+        WlanflowCapture (WlanflowConfig &wlanflow_config):  m_wlanflow_config(wlanflow_config) {
+            WlanflowExporter::init(
+                wlanflow_config.get_zmq_conn_string(), wlanflow_config.get_debug());
         };
 
         void run();
@@ -39,7 +39,7 @@ class FinixCapture {
         static bool invalid_wlan_packet(const PDU& pdu);
         static long long get_current_timestamp();
         
-        FinixConfig m_finix_config;
+        WlanflowConfig m_wlanflow_config;
 };
 }
 #endif

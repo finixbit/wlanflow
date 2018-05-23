@@ -1,24 +1,24 @@
 #include <iostream>
 #include <sys/time.h>
 #include <time.h>
-#include "finix_capture.hpp"
-#include "finix_format.hpp"
+#include "wlanflow_capture.hpp"
+#include "wlanflow_format.hpp"
 using namespace Tins;
-using namespace finix;
+using namespace wlanflow;
 
 
-void FinixCapture::run() {
-    Sniffer sniffer(m_finix_config.get_interface(), Sniffer::PROMISC);
-    sniffer.set_filter(m_finix_config.get_pcap_filter());
+void WlanflowCapture::run() {
+    Sniffer sniffer(m_wlanflow_config.get_interface(), Sniffer::PROMISC);
+    sniffer.set_filter(m_wlanflow_config.get_pcap_filter());
     sniffer.sniff_loop(process_packets);
 }
 
-bool FinixCapture::process_packets(const PDU& pdu) {
+bool WlanflowCapture::process_packets(const PDU& pdu) {
     //  check if packet is not wlan exit
     if (invalid_wlan_packet(pdu))
         return true;
 
-    FinixFormat pkt;
+    WlanflowFormat pkt;
     pkt.set_timestamp(get_current_timestamp());
 
     // get frame type and subtype
@@ -43,7 +43,7 @@ bool FinixCapture::process_packets(const PDU& pdu) {
 
     // export data
     auto data = pkt.serialize_to_json_string();
-    auto response = FinixExporter::export_capture(data);
+    auto response = WlanflowExporter::export_capture(data);
     
     if(response)
         printf("%s\n", data.c_str());
@@ -53,13 +53,13 @@ bool FinixCapture::process_packets(const PDU& pdu) {
     return true;
 }
 
-bool FinixCapture::invalid_wlan_packet(const PDU& pdu) {
+bool WlanflowCapture::invalid_wlan_packet(const PDU& pdu) {
   if (pdu.pdu_type() != PDU::PDUType::RADIOTAP)
     return true;
   return false;
 }
 
-std::string FinixCapture::get_frame_type(const PDU& pdu) {
+std::string WlanflowCapture::get_frame_type(const PDU& pdu) {
   std::string frame_type("unknown");
   const Dot11 &frame = pdu.rfind_pdu<Dot11>();
 
@@ -82,7 +82,7 @@ std::string FinixCapture::get_frame_type(const PDU& pdu) {
   return frame_type;
 }
 
-std::string FinixCapture::get_frame_subtype(const PDU& pdu) {
+std::string WlanflowCapture::get_frame_subtype(const PDU& pdu) {
   std::string frame_sub_type("unknown");
   const Dot11 &frame = pdu.rfind_pdu<Dot11>();
 
@@ -105,7 +105,7 @@ std::string FinixCapture::get_frame_subtype(const PDU& pdu) {
   return frame_sub_type;
 }
 
-std::string FinixCapture::get_src_addr(std::string frame_type, const PDU& pdu) {
+std::string WlanflowCapture::get_src_addr(std::string frame_type, const PDU& pdu) {
   std::string src_addr("unknown");
 
   if(frame_type == std::string(MGMT_FRAME)) {
@@ -125,7 +125,7 @@ std::string FinixCapture::get_src_addr(std::string frame_type, const PDU& pdu) {
   return src_addr;
 }
 
-std::string FinixCapture::get_dst_addr(std::string frame_type, const PDU& pdu) {
+std::string WlanflowCapture::get_dst_addr(std::string frame_type, const PDU& pdu) {
   std::string dst_addr("unknown");
   
   if(frame_type == std::string(MGMT_FRAME)) {
@@ -145,7 +145,7 @@ std::string FinixCapture::get_dst_addr(std::string frame_type, const PDU& pdu) {
   return dst_addr;
 }
 
-int32_t FinixCapture::get_dbm_signal(const PDU& pdu) {
+int32_t WlanflowCapture::get_dbm_signal(const PDU& pdu) {
     int32_t dbm_signal = 0; 
   
     try {
@@ -158,7 +158,7 @@ int32_t FinixCapture::get_dbm_signal(const PDU& pdu) {
     return dbm_signal;
 }
 
-int32_t FinixCapture::get_signal_quality(const PDU& pdu) {
+int32_t WlanflowCapture::get_signal_quality(const PDU& pdu) {
     int32_t signal_quality = 0; 
   
     try {
@@ -171,7 +171,7 @@ int32_t FinixCapture::get_signal_quality(const PDU& pdu) {
     return signal_quality;
 }
 
-int32_t FinixCapture::get_antenna(const PDU& pdu) {
+int32_t WlanflowCapture::get_antenna(const PDU& pdu) {
     int32_t antenna = 0; 
   
     try {
@@ -184,7 +184,7 @@ int32_t FinixCapture::get_antenna(const PDU& pdu) {
     return antenna;
 }
 
-int32_t FinixCapture::get_db_signal(const PDU& pdu) {
+int32_t WlanflowCapture::get_db_signal(const PDU& pdu) {
     int32_t db_signal = 0; 
   
     try {
@@ -197,7 +197,7 @@ int32_t FinixCapture::get_db_signal(const PDU& pdu) {
     return db_signal;
 }
 
-int32_t FinixCapture::get_dbm_noise(const PDU& pdu) {
+int32_t WlanflowCapture::get_dbm_noise(const PDU& pdu) {
     int32_t dbm_noise = 0; 
   
     try {
@@ -210,14 +210,14 @@ int32_t FinixCapture::get_dbm_noise(const PDU& pdu) {
     return dbm_noise;
 }
 
-long long FinixCapture::get_current_timestamp() {
+long long WlanflowCapture::get_current_timestamp() {
   struct timeval tv;
   gettimeofday(&tv,NULL);
   long long aa = tv.tv_sec; 
   return tv.tv_sec;
 }
 
-std::string FinixCapture::_get_mgmt_subtype(int frame_byte) {
+std::string WlanflowCapture::_get_mgmt_subtype(int frame_byte) {
   std::string st("unknown");
   switch (frame_byte) {
   case Dot11::ManagementSubtypes::ASSOC_REQ:    st = "association_request"; break;
@@ -236,7 +236,7 @@ std::string FinixCapture::_get_mgmt_subtype(int frame_byte) {
   return st;
 }
 
-std::string FinixCapture::_get_ctrl_subtype(int frame_byte) {
+std::string WlanflowCapture::_get_ctrl_subtype(int frame_byte) {
   std::string st("unknown");
   switch (frame_byte) {
   case Dot11::ControlSubtypes::BLOCK_ACK_REQ:   st = "block_acknowlegde_request"; break;
@@ -252,7 +252,7 @@ std::string FinixCapture::_get_ctrl_subtype(int frame_byte) {
   return st;
 }
 
-std::string FinixCapture::_get_data_subtype(int frame_byte) {
+std::string WlanflowCapture::_get_data_subtype(int frame_byte) {
   std::string st("unknown");
   switch (frame_byte) {
   case Dot11::DataSubtypes::DATA_DATA:        st = "data_data"; break;
@@ -273,7 +273,7 @@ std::string FinixCapture::_get_data_subtype(int frame_byte) {
   return st;
 }
 
-std::string FinixCapture::_get_control_src_addr(int frame_byte, const PDU& pdu) {
+std::string WlanflowCapture::_get_control_src_addr(int frame_byte, const PDU& pdu) {
     std::string src_addr("unknown");
 
     if (frame_byte == Dot11::ControlSubtypes::BLOCK_ACK_REQ) {

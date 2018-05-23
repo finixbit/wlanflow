@@ -1,5 +1,5 @@
-#ifndef _H_FINIX_FORMAT_
-#define _H_FINIX_FORMAT_
+#ifndef _H_WLANFLOW_FORMAT_
+#define _H_WLANFLOW_FORMAT_
 
 
 /* wlan frame types */
@@ -7,8 +7,8 @@
 #define CTRL_FRAME "control"
 #define DATA_FRAME "data"
 
-namespace finix {
-class FinixFormat {
+namespace wlanflow {
+class WlanflowFormat {
     public:
         void set_timestamp(long long tt);
         void set_frame_type(std::string frame_type);
@@ -43,4 +43,4 @@ class FinixFormat {
 };
 }
 
-#endif  /* _H_FINIX_FORMAT_ */
+#endif  /* _H_WLANFLOW_FORMAT_ */

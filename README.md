@@ -1,7 +1,7 @@
-# finix
+# Wlanflow
 Wireless traffic netflow-like exporter for IEEE 802.11 specifications.
 
-Finix collects and decode wireless packets into json format. 
+Wlanflow collects and decode wireless packets into json format. 
 
 Data is exported using zeromq pubsub to be consumed by applications that want 
 to work with this data.
@@ -27,14 +27,14 @@ $ make
 $ sudo make install
 ```
 
-## Install Finix
+## Install Wlanflow
 ```
-$ git clone https://github.com/finixbit/finix.git
-$ cd finix
+$ git clone https://github.com/finixbit/wlanflow.git
+$ cd wlanflow
 $ make
 ```
 
-# Usage (Requires Root)
+# Usage
 
 ## Enable monitor mode for wireless interface 
 ```
@@ -43,19 +43,19 @@ $ sudo iwconfig wlan0 mode monitor
 $ sudo ifconfig wlan0 up
 ```
 
-## Run finix using created monitor mode interface
+## Run wlanflow using created monitor mode interface
 ```
-$ sudo ./bin/finix --interface=wlan0 --debug
+$ sudo ./bin/wlanflow --interface=wlan0 --debug
 ```
 
 ## Help
 ```
-Usage: ./bin/finix [-h|--help] -i|--interface value [-n|--name value] [-f|--pcap-filter value] [-z|--zmq-conn value] [-d|--debug] 
+Usage: ./bin/wlanflow [-h|--help] -i|--interface value [-n|--name value] [-f|--pcap-filter value] [-z|--zmq-conn value] [-d|--debug] 
 Options:
  -h, --help                       print this help
  -i, --interface value            Specify Interface
  -n, --name value                 Specify export name (optional [default=default])
- -f, --pcap-filter value          Specify pcap wlan filter (optional [default=wlan])
+ -f, --pcap-filter value          Specify pcap wlan filter (optional [default=wlan0])
  -z, --zmq-conn value             Specify zeromq connection (optional [default=tcp://*:70000])
  -d, --debug                      Specify debugging (optional)
 ```

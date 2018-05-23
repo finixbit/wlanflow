@@ -1,10 +1,10 @@
-#ifndef _H_FINIX_EXPORTER_
-#define _H_FINIX_EXPORTER_
+#ifndef _H_WLANFLOW_EXPORTER_
+#define _H_WLANFLOW_EXPORTER_
 
 #include <string>
 
-namespace finix {
-class FinixExporter {
+namespace wlanflow {
+class WlanflowExporter {
     public:
         static void init(std::string zmq_conn_string, bool debug);
         static bool export_capture(std::string capture_data);

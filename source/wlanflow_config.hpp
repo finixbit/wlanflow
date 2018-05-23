@@ -1,8 +1,8 @@
-#ifndef _H_FINIX_CONFIG_
-#define _H_FINIX_CONFIG_
+#ifndef _H_WLANFLOW_CONFIG_
+#define _H_WLANFLOW_CONFIG_
 
-namespace finix {
-class FinixConfig  {
+namespace wlanflow {
+class WlanflowConfig  {
     public:
         void set_interface(std::string interface);
         std::string get_interface();
